@@ -1,3 +1,12 @@
+########################################################################
+# Let's look at why this setup is useful.                              #
+# Again: Scripts and notebooks are for execution, not for development. #
+########################################################################
+
+#########################
+# 1. Step: Load modules #
+#########################
+
 # LOAD MODULES
 # Standard library
 import os
@@ -26,6 +35,10 @@ from src.utils.setup import (
 )
 from src.utils.training import train_val_tuner
 
+#####################
+# 2. Step: Settings #
+#####################
+
 # SETTINGS
 # Directory
 # NOTE: I am working with a tracker that keeps track of the experiments that have already been completed. 
@@ -43,36 +56,35 @@ HYPERPARAMS = load_config("config/models/mlp.yaml")["parameters"]
 RANDOM_SEARCH_N = 3
 
 # Save para combinations
-combinations = list(itertools.product(*CONFIG.values()))
+COMBINATIONS = list(itertools.product(*CONFIG.values()))
 
-# Ini tracker
+######################
+# 3. Step: Execution #
+######################
+
+# Initialize the tracker csv file
 check_create_csv(TRACKER, CONFIG.keys())
 
-for combination in tqdm(combinations, desc="Iterate over combinations"):
-    # Get completed combinations
+# Iterate over combinations
+for combination in tqdm(COMBINATIONS, desc="Iterate over combinations"):
+    # 0. Check whether combination is already completed
     completed = get_rows(TRACKER)
-    
-    # If combination already completed, skip
     if (combination in completed):
         continue
-
-    # Add combination to tracker
-    add_row(TRACKER, combination)
-
-    # Save settings
-    data_settings = dict(zip(CONFIG.keys(), combination))
+    else:
+        # Add combination to the tracker
+        add_row(TRACKER, combination)
+        # Save settings as a dictionary
+        data_settings = dict(zip(CONFIG.keys(), combination))
     
-    # Ini results
+    # 1. Initialize the results dictionary
     results = {}
-    
-    # Log settings
     results.update(data_settings)
     
-    # Ini data
+    # 2. Load the data
     data = load_data(**data_settings)
     
-    # TRAIN MODELS
-    # MLP
+    # 3. Train model
     name = "MLP"
     # We need to add the input size for the MLP
     HYPERPARAMS.update({"input_size": [data.x_train.shape[1]]})
@@ -85,17 +97,19 @@ for combination in tqdm(combinations, desc="Iterate over combinations"):
         num_combinations=RANDOM_SEARCH_N,
     )
     
-    results.update(
-        {
-            "MISE " + name: mean_integrated_prediction_error(
+    # 4. Evaluate performance
+    mise = mean_integrated_prediction_error(
                 x = data.x_test,
                 response = data.ground_truth,
-                model = model,
-            ),
+                model = model
+    )
+    
+    # 5. Add results to the dictionary
+    results.update(
+        {
+            "MISE " + name: mise,
         }
     )
     
-    # FINISH
-    
-    # Add results
+    # 6. Add dictionary to the csv file
     add_dict(RES_FILE, results)
