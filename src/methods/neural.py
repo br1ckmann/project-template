@@ -5,7 +5,7 @@ from typing import Callable, Optional
 import math
 
 # Proprietary
-from src.models.utils import (
+from src.methods.utils import (
     # Standard imports
     ContinuousCATENN,
 )

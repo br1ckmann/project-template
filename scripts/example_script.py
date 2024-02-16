@@ -35,7 +35,7 @@ sys.path.append(DIR)
 
 # Proprietary
 from src.data.ihdp_s_1 import load_data
-from src.models.neural import MLP
+from src.methods.neural import MLP
 from src.utils.metrics import mean_integrated_prediction_error
 from src.utils.setup import (
     load_config,
@@ -61,7 +61,7 @@ TRACKER = "tracker.csv"
 # SETUP
 # Load config
 CONFIG = load_config("config/data/ihdp_s_1.yaml")["parameters"]
-HYPERPARAMS = load_config("config/models/mlp.yaml")["parameters"]
+HYPERPARAMS = load_config("config/methods/mlp.yaml")["parameters"]
 
 # Number of parameter combinations to consider
 RANDOM_SEARCH_N = 3

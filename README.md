@@ -31,7 +31,7 @@ Here's the general structure with some additional info:
     *Assets are all non-coding related files that you might want to save in your repo. These can include, e.g., pictures for your readme.md or PDFs*  
     - `config/`  
     *Any configuration file used for setting up experiments or training models.*  
-    *It is good practice to save model configurations or parameters for iteration in separate YAML files. We'll touch upon this in the sample scripts.*  
+    *It is good practice to save configurations or parameters for iteration in separate YAML files. We'll touch upon this in the sample scripts.*  
     *Getting into writing YAML scripts is super easy and will keep your code nice and clean (as we like it).*  
     - `data/`  
     *This is the only folder where you are going to store data (csv, pickle, or other).*  
@@ -41,7 +41,7 @@ Here's the general structure with some additional info:
         - `raw/`  
     - `lib/`  
     *Your library of other, of-the-shelf code.*  
-    *When you do a benchmarking, e.g., and you have a model that you use without changing any of the code, put it here.*
+    *When you do a benchmarking, e.g., and you have a method or package that you use without changing any of the code, put it here.*
     *If you do any tweaks to it, better to put it into * `src/`.
     *BTW notice that the* `lib/` *folder is typically included in the standard* `.gitignore` *file. Best to remove it and sync it with your project*
     - `notebooks/`  
@@ -56,9 +56,9 @@ Here's the general structure with some additional info:
     - `src/`  
     *The "source" directory. That's the flesh and bone of your project.*  
     *Here you will put all proprietary code that you use for your method.*  
-    *Think about it this way: A script or notebook is just a way to tell your models what to do. Its goal is to link hyperparameters, data, and models in one spot.*  
+    *Think about it this way: A script or notebook is just a way to tell your methods what to do. Its goal is to link hyperparameters, data, and methods in one spot.*  
     *The key to effective and good programming is to keep all these building blocks separatly for as long as possible.*  
-    *In the end, your main scripts or notebooks will only be a few lines, saying: Use this dataset, with that model and these hyperparameters, and calculate this metric. End of script.*  
+    *In the end, your main scripts or notebooks will only be a few lines, saying: Use this dataset, with that method and these hyperparameters, and calculate this metric. End of script.*  
     *The* `src/` *directory has a few typical subfolders:*  
         - `data/`  
         *Scripts needed to load data from the* `data/` *directory.*  
@@ -67,12 +67,12 @@ Here's the general structure with some additional info:
         *That's why it is good practice to load data in form of a "data class". More on that in the sample scripts.*
             - `utils/`  
             *Any utility scripts.*
-        - `models/`  
-        *Where all your proprietary models will be stored.*  
+        - `methods/`  
+        *Where all your proprietary methods will be stored.*  
             - `utils/`  
-            *Any utility scripts for your models.*
+            *Any utility scripts for your methods.*
         - `utils/`  
-        *Even more utility scripts? No - this folder contains anything from visualization scripts to tools for performance evaluation. It is anything that is not needed for training models, or loading data.*
+        *Even more utility scripts? No - this folder contains anything from visualization scripts to tools for performance evaluation. It is anything that is not needed for training methods, or loading data.*
     - `LICENSE`  
     *When publishing code online, it is best to include a license. You can tweak the license in this project and add your name to it (it is the MIT license), or download a different template.*
     - `README.md`  
