@@ -1,3 +1,14 @@
+"""
+    __   ___   ___    ____  ____    ____      ____ _____     _____  __ __  ____  
+   /  ] /   \ |   \  |    ||    \  /    |    |    / ___/    |     ||  |  ||    \ 
+  /  / |     ||    \  |  | |  _  ||   __|     |  (   \_     |   __||  |  ||  _  |
+ /  /  |  O  ||  D  | |  | |  |  ||  |  |     |  |\__  |    |  |_  |  |  ||  |  |
+/   \_ |     ||     | |  | |  |  ||  |_ |     |  |/  \ |    |   _] |  :  ||  |  |
+\     ||     ||     | |  | |  |  ||     |     |  |\    |    |  |   |     ||  |  |
+ \____| \___/ |_____||____||__|__||___,_|    |____|\___|    |__|    \__,_||__|__|
+                                                                                 
+"""
+
 ########################################################################
 # Let's look at why this setup is useful.                              #
 # Again: Scripts and notebooks are for execution, not for development. #
@@ -12,13 +23,13 @@
 import os
 import sys
 import itertools
-import threadpoolctl
+import warnings
 
 # Third party
 from tqdm import tqdm
 
 # NOTE: Your script is not in the root directory. We must hence change the system path
-DIR = "/Users/cbr/Code/project-template"
+DIR = "/Users/cbr/Code/_boilerplate-code/bp_project-template"
 os.chdir(DIR)
 sys.path.append(DIR)
 
@@ -57,6 +68,13 @@ RANDOM_SEARCH_N = 3
 
 # Save para combinations
 COMBINATIONS = list(itertools.product(*CONFIG.values()))
+
+# This will mute divice summaries in PyTorch
+import logging
+logging.getLogger("lightning.pytorch").setLevel(logging.ERROR)
+logger = logging.getLogger("lightning.pytorch.core")
+logger.addHandler(logging.FileHandler("core.log"))
+warnings.filterwarnings("ignore")
 
 ######################
 # 3. Step: Execution #
