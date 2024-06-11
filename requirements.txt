@@ -4,7 +4,7 @@
 # You'll notice that this also includes all dependencies of the packages once installed.
 # Try to clean up a bit.
 
-lightning==2.1.3
+lightning>=2.2.3
 lightning-utilities==0.10.0
 matplotlib==3.8.2
 mpmath==1.3.0
